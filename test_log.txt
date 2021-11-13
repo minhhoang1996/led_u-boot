@@ -1,0 +1,44 @@
+U-Boot SPL 2020.04-dirty (Nov 13 2021 - 20:47:07 +0700)
+Trying to boot from MMC1
+
+
+U-Boot 2020.04-dirty (Nov 13 2021 - 20:47:07 +0700)
+
+CPU  : AM335X-GP rev 2.1
+Model: TI AM335x BeagleBone Black
+DRAM:  512 MiB
+WDT:   Started with servicing (60s timeout)
+NAND:  0 MiB
+MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
+Loading Environment from FAT... OK
+Net:
+Warning: ethernet@4a100000 MAC addresses don't match:
+Address in ROM is          88:3f:4a:24:54:b6
+Address in environment is  88:3f:4a:24:54:11
+eth0: ethernet@4a100000
+Warning: usb_ether MAC addresses don't match:
+Address in ROM is          de:ad:be:ef:00:01
+Address in environment is  88:3f:4a:24:54:b8
+, eth1: usb_ether
+Hit any key to stop autoboot:  0
+=> demo_led show
+led:P1:14
+=> demo_led led:P1:14
+LED 'led:P1:14': off
+=> demo_led led:P1:14 on
+=> demo_led led:P1:14
+LED 'led:P1:14': on
+=> demo_led led:P1:14 off
+=> demo_led led:P1:14
+LED 'led:P1:14': off
+=> demo_led
+demo_led - manage DEMO LEDs
+
+Usage:
+demo_led <led_label> on|off|toggle      Change LED state
+demo_led <led_label>    Get LED state
+demo_led show    Show LED label
+=> demo_led led:P1:14 on
+=> demo_led led:P1:14 off
+=>
+

@@ -1,0 +1,88 @@
+diff --git a/arch/arm/dts/am335x-boneblack.dts b/arch/arm/dts/am335x-boneblack.dts
+index 27ebe4a65d..b03b6df67d 100644
+--- a/arch/arm/dts/am335x-boneblack.dts
++++ b/arch/arm/dts/am335x-boneblack.dts
+@@ -17,6 +17,20 @@
+ 		stdout-path = &uart0;
+ 		tick-timer = &timer2;
+ 	};
++
++	demo_leds {
++		pinctrl-names = "default";
++		pinctrl-0 = <&demo_leds>;
++
++		compatible = "demo-uboot-leds";
++
++		used_led@1 {
++				label = "led:P1:14";
++				gpios = <&gpio1 14 GPIO_ACTIVE_HIGH>;
++				default-state = "on";
++		};
++	};
++
+ };
+ 
+ &ldo3_reg {
+@@ -38,6 +52,11 @@
+ };
+ 
+ &am33xx_pinmux {
++	demo_leds: demo_leds {
++		pinctrl-single,pins = <
++			0x38 (PIN_OUTPUT_PULLDOWN | MUX_MODE7) /* gpmc_ad14.gpio1_14 */
++		>;
++	};
+ 	nxp_hdmi_bonelt_pins: nxp_hdmi_bonelt_pins {
+ 		pinctrl-single,pins = <
+ 			0x1b0 0x03      /* xdma_event_intr0, OMAP_MUX_MODE3 | AM33XX_PIN_OUTPUT */
+diff --git a/cmd/Kconfig b/cmd/Kconfig
+index 6403bc45a5..dd08748e18 100644
+--- a/cmd/Kconfig
++++ b/cmd/Kconfig
+@@ -1,5 +1,11 @@
+ menu "Command line interface"
+ 
++config CMD_DEMO_LED
++        bool "demo_led"
++        help
++          Enable the 'demo_led' command which allows for control of LEDs. In
++	  this case, it is P1.14.
++
+ config CMDLINE
+ 	bool "Support U-Boot commands"
+ 	default y
+diff --git a/cmd/Makefile b/cmd/Makefile
+index f1dd513a4b..d8682edfa4 100644
+--- a/cmd/Makefile
++++ b/cmd/Makefile
+@@ -11,6 +11,7 @@ obj-y += help.o
+ obj-y += version.o
+ 
+ # command
++obj-$(CONFIG_CMD_DEMO_LED) += demo_led.o
+ obj-$(CONFIG_CMD_AES) += aes.o
+ obj-$(CONFIG_CMD_AB_SELECT) += ab_select.o
+ obj-$(CONFIG_CMD_ADC) += adc.o
+diff --git a/drivers/Kconfig b/drivers/Kconfig
+index e34a22708c..a1c68d2667 100644
+--- a/drivers/Kconfig
++++ b/drivers/Kconfig
+@@ -1,5 +1,7 @@
+ menu "Device Drivers"
+ 
++source "drivers/demo_led/Kconfig"
++
+ source "drivers/core/Kconfig"
+ 
+ # types of drivers sorted in alphabetical order
+diff --git a/drivers/Makefile b/drivers/Makefile
+index 23501fd743..2289ee88dc 100644
+--- a/drivers/Makefile
++++ b/drivers/Makefile
+@@ -1,5 +1,5 @@
+ # SPDX-License-Identifier: GPL-2.0+
+-
++obj-$(CONFIG_DEMO_LED) += demo_led/
+ obj-$(CONFIG_$(SPL_TPL_)CACHE) += cache/
+ obj-$(CONFIG_$(SPL_TPL_)CLK) += clk/
+ obj-$(CONFIG_$(SPL_TPL_)DM) += core/

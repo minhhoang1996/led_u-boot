@@ -1,0 +1,9 @@
+menu "LED DEMO Support"
+
+config DEMO_LED 
+        bool "Enable DEMO LED support"
+        depends on DM
+        help
+          This is just a demo to show how to simply control a led in u-boot.
+
+endmenu
