@@ -1,12 +1,12 @@
 ## Environment
 #### U-boot tag: v2020.04(Tested)
 #### Enable this U-boot configuration (CONFIG_DEMO_LED):
-- Add these lines into configs/am335x_evm_defconfig file
-CONFIG_DEMO_LED=y
-CONFIG_CMD_DEMO_LED=y
-CONFIG_LED=y
+- Add these lines into configs/am335x_evm_defconfig file  
+CONFIG_DEMO_LED=y  
+CONFIG_CMD_DEMO_LED=y  
+CONFIG_LED=y  
 
-#### Connect a led into the P1.14 pin
+#### Connect a led into the GPIO1.14 pin
 
 #### Clone and apply the led_uboot repo to uboot source code:
 git clone git://git.denx.de/u-boot.git   
